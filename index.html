@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Department of AI - S.I.V.E.T. College</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Inter & Cinzel for clean academic typography -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body { font-family: 'Inter', sans-serif; }
+    .font-serif-academic { font-family: 'Cinzel', serif; }
+    
+    /* Animation Keyframes & Classes */
+    @keyframes marquee {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .animate-marquee {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    .animate-marquee:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes shimmer {
+      100% { transform: translateX(100%); }
+    }
+    .skeleton-wave {
+      position: relative;
+      overflow: hidden;
+      background-color: #e2e8f0;
+    }
+    .skeleton-wave::after {
+      position: absolute;
+      top: 0; right: 0; bottom: 0; left: 0;
+      transform: translateX(-100%);
+      background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.4) 20%,
+        rgba(255, 255, 255, 0.7) 60%,
+        rgba(255, 255, 255, 0)
+      );
+      animation: shimmer 1.8s infinite;
+      content: '';
+    }
+
+    .fade-in-slide {
+      animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #a7f3d0; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+
+    .nav-btn { transition: all 0.2s ease-in-out; }
+  </style>
+</head>
+<body class="bg-emerald-50/30 text-slate-900 antialiased h-screen flex flex-col overflow-hidden">
+
+  <!-- HEADER WITH LIGHT GREEN GRADIENT ACCENT -->
+  <header class="bg-gradient-to-r from-emerald-900 via-teal-800 to-emerald-950 text-white shrink-0 border-b-2 border-emerald-400/80 shadow-md z-20">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-4">
+        <!-- Official College Emblem -->
+        <img src="unnamed.png" alt="S.I.V.E.T. Logo" class="h-14 w-auto object-contain bg-white/90 p-1 rounded-md shadow-sm transition transform hover:scale-105 duration-300">
+        <div>
+          <h1 class="font-serif-academic font-bold text-xl md:text-2xl tracking-wide text-white uppercase">
+            DEPARTMENT OF AI
+          </h1>
+          <p class="text-xs md:text-sm font-medium tracking-widest text-emerald-200/90 uppercase mt-0.5">
+            S.I.V.E.T. COLLEGE
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Actions / Live Indicator -->
+      <div class="hidden sm:flex items-center gap-3">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-800/80 text-emerald-100 border border-emerald-600/50">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          Academic Portal
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MARQUEE NEWS TICKER -->
+  <div class="bg-emerald-100/80 border-b border-emerald-200 text-emerald-950 text-xs py-1.5 overflow-hidden flex items-center shrink-0">
+    <div class="bg-emerald-700 text-white font-bold px-3 py-0.5 text-[10px] uppercase tracking-wider shrink-0 z-10 ml-2 rounded">
+      Updates
+    </div>
+    <div class="w-full overflow-hidden relative">
+      <div class="animate-marquee font-medium">
+        🎓 Department of Artificial Intelligence — Admissions Open for Academic Year • Research Seminar on Generative Models Scheduled for Next Week • Welcome to S.I.V.E.T. College AI Department Portal
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="flex-1 flex overflow-hidden">
+
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <aside class="w-80 lg:w-88 bg-white border-r border-emerald-100 flex flex-col shrink-0 z-10 shadow-sm">
+
+      <!-- Navigation Search -->
+      <div class="p-3 border-b border-emerald-100 bg-emerald-50/40">
+        <div class="relative">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+          <input type="text" id="menu-search" onkeyup="filterMenu()" placeholder="Search sections..." class="w-full pl-9 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500/50 shadow-sm transition">
+        </div>
+      </div>
+
+      <!-- Menu Items -->
+      <nav class="flex-1 overflow-y-auto p-3 space-y-1" id="sidebar-menu">
+        
+        <!-- SECTION GROUP 1: HOD'S MESSAGE -->
+        <div class="section-banner my-2 px-3 py-2 bg-gradient-to-r from-emerald-800 to-teal-800 rounded text-emerald-100 font-serif-academic font-bold text-[11px] tracking-wider uppercase flex items-center justify-between border-l-4 border-emerald-400 shadow-sm">
+          <span class="flex items-center gap-2">
+            <i data-lucide="message-square" class="w-3.5 h-3.5 text-emerald-300"></i>
+            HOD'S MESSAGE
+          </span>
+        </div>
+
+        <button onclick="switchTab(1)" id="btn-page-1" class="nav-btn active text-left w-full px-3 py-2 rounded text-xs font-semibold bg-emerald-50 text-emerald-900 border-l-4 border-emerald-600 border-y border-r border-emerald-200/60 flex items-center justify-between shadow-sm transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="compass" class="w-4 h-4 text-emerald-700 shrink-0"></i>
+            <span class="truncate">Vision & Mission Statement</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-emerald-700 shrink-0"></i>
+        </button>
+
+        <button onclick="switchTab(2)" id="btn-page-2" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="history" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">History of the Department</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(3)" id="btn-page-3" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="building" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Classrooms Area & Capacity</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(4)" id="btn-page-4" class="nav-btn text-left w-full px-3.5 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="users" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Student Strength</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(5)" id="btn-page-5" class="nav-btn text-left w-full px-3.5 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="cpu" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Laboratory Specification</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <!-- SECTION GROUP 2: ANNUAL REPORT -->
+        <div class="section-banner mt-5 mb-2 px-3 py-2 bg-gradient-to-r from-emerald-800 to-teal-800 rounded text-emerald-100 font-serif-academic font-bold text-[11px] tracking-wider uppercase flex items-center justify-between border-l-4 border-emerald-400 shadow-sm">
+          <span class="flex items-center gap-2">
+            <i data-lucide="file-text" class="w-3.5 h-3.5 text-emerald-300"></i>
+            ANNUAL REPORT
+          </span>
+        </div>
+
+        <button onclick="switchTab(6)" id="btn-page-6" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="info" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">About the Department</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(7)" id="btn-page-7" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="user-check" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Admission Criteria</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(8)" id="btn-page-8" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="graduation-cap" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Faculty Details</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(9)" id="btn-page-9" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="trophy" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Student Participation</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(10)" id="btn-page-10" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="activity" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Department Activities (DAB)</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(11)" id="btn-page-11" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="book-open" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Faculty Research Contribution</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(12)" id="btn-page-12" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="briefcase" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Higher Education & Placement</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+        <button onclick="switchTab(13)" id="btn-page-13" class="nav-btn text-left w-full px-3 py-2 rounded text-xs font-medium text-slate-700 hover:bg-emerald-50/60 hover:text-emerald-800 flex items-center justify-between transform hover:scale-[1.01]">
+          <div class="flex items-center gap-2.5 truncate">
+            <i data-lucide="calendar" class="w-4 h-4 text-slate-400 shrink-0"></i>
+            <span class="truncate">Master Academic Time Table</span>
+          </div>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400 opacity-0 shrink-0 transition"></i>
+        </button>
+
+      </nav>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT DISPLAY AREA -->
+    <main class="flex-1 overflow-y-auto p-6 lg:p-10 bg-white">
+      <div class="max-w-5xl mx-auto">
+
+        <!-- CONTENT HEADER WITH EDIT CONTROL FOR HOD -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-emerald-100 pb-4 mb-6 gap-3">
+          <div>
+            <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Active View Mode
+            </span>
+            <h2 id="active-title" class="text-2xl lg:text-3xl font-serif-academic font-bold text-slate-900 mt-1">
+              Vision & Mission Statement
+            </h2>
+          </div>
+
+          <!-- Edit Button for H.O.D. Database Entry -->
+          <button onclick="openEditModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-md shadow-sm transition transform hover:scale-105 shrink-0">
+            <i data-lucide="edit-3" class="w-4 h-4"></i>
+            Edit Section Content (HOD Admin)
+          </button>
+        </div>
+
+        <!-- PAGE 1: WELCOME & VISION PAGE WITH CAMPUS PHOTO -->
+        <div id="page-1" class="page-content fade-in-slide space-y-6">
+          
+          <!-- Campus Banner Image -->
+          <div class="relative rounded-xl overflow-hidden shadow-md border border-slate-200 group">
+            <img src="sivet-college-tambaram-361856.png" alt="SIVET College Campus" class="w-full h-64 md:h-80 object-cover transform transition duration-500 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-emerald-950/80 via-transparent to-transparent flex items-end p-6">
+              <div class="text-white">
+                <span class="bg-emerald-600/90 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded">Campus Overview</span>
+                <h3 class="text-xl md:text-2xl font-serif-academic font-bold mt-1">Department of Artificial Intelligence</h3>
+                <p class="text-xs text-emerald-100/90">S.I.V.E.T. College, Gowrivakkam, Tambaram, Chennai</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gradient-to-br from-emerald-50 to-white border border-emerald-200/80 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="p-2.5 bg-emerald-700 text-white rounded-lg">
+                  <i data-lucide="eye" class="w-5 h-5"></i>
+                </div>
+                <h4 class="font-serif-academic font-bold text-lg text-emerald-950">Department Vision</h4>
+              </div>
+              <p id="content-vision" class="text-sm text-slate-700 leading-relaxed">
+                To evolve as a center of excellence in Artificial Intelligence education and research, empowering students with technological competencies, ethical grounding, and innovative capabilities to address complex societal challenges.
+              </p>
+            </div>
+
+            <div class="bg-gradient-to-br from-teal-50 to-white border border-teal-200/80 rounded-xl p-6 shadow-sm hover:shadow-md transition">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="p-2.5 bg-teal-700 text-white rounded-lg">
+                  <i data-lucide="target" class="w-5 h-5"></i>
+                </div>
+                <h4 class="font-serif-academic font-bold text-lg text-teal-950">Department Mission</h4>
+              </div>
+              <p id="content-mission" class="text-sm text-slate-700 leading-relaxed">
+                Provide rigorous academic training in core AI principles, foster collaborative industry partnerships, cultivate continuous learning habits, and emphasize ethical responsibility in autonomous systems development.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- GENERIC DYNAMIC CONTENT PAGES (2 TO 13) -->
+        <div id="dynamic-container" class="page-content hidden fade-in-slide space-y-6">
+          <div class="p-6 bg-slate-50 border border-slate-200 rounded-xl space-y-4">
+            <div id="dynamic-text-body" class="text-sm text-slate-700 leading-relaxed">
+              <!-- Content rendered here -->
+            </div>
+          </div>
+
+          <!-- Skeleton Wave Placeholder (Simulates Loading / Ready for HOD entries) -->
+          <div class="border border-slate-200 rounded-xl p-6 space-y-4 bg-white">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-400">Database Entry Status</span>
+              <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-medium">Ready for updates</span>
+            </div>
+            <div class="space-y-2.5">
+              <div class="h-4 skeleton-wave rounded w-3/4"></div>
+              <div class="h-4 skeleton-wave rounded w-1/2"></div>
+              <div class="h-4 skeleton-wave rounded w-5/6"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- EDIT MODAL FOR H.O.D. TO UPDATE SECTION DATA -->
+  <div id="edit-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
+      <div class="bg-emerald-800 px-6 py-4 text-white flex items-center justify-between">
+        <h3 class="font-serif-academic font-bold text-lg">Update Section Data</h3>
+        <button onclick="closeEditModal()" class="text-emerald-200 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Section Title</label>
+          <input type="text" id="modal-title-input" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Content / Description Details</label>
+          <textarea id="modal-body-input" rows="5" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Enter updated information for this department section..."></textarea>
+        </div>
+      </div>
+      <div class="bg-slate-50 px-6 py-3 flex justify-end gap-3 border-t border-slate-200">
+        <button onclick="closeEditModal()" class="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-200 rounded-md">Cancel</button>
+        <button onclick="saveSectionData()" class="px-4 py-2 text-xs font-semibold bg-emerald-700 hover:bg-emerald-800 text-white rounded-md shadow-sm">Save Update</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Section Titles Map
+    const pageTitles = {
+      1: "Vision & Mission Statement",
+      2: "History of the Department",
+      3: "Classrooms Area & Capacity",
+      4: "Student Strength",
+      5: "Laboratory Specification",
+      6: "About the Department",
+      7: "Admission Criteria",
+      8: "Faculty Details",
+      9: "Student Participation",
+      10: "Department Activities (DAB)",
+      11: "Faculty Research Contribution",
+      12: "Higher Education & Placement",
+      13: "Master Academic Time Table"
+    };
+
+    let activePageIndex = 1;
+
+    // Load or initialize local data store
+    function getStoredData(index) {
+      const stored = localStorage.getItem('sivet_ai_section_' + index);
+      if (stored) return stored;
+      return `Detailed data for ${pageTitles[index]} is prepared and ready for H.O.D. database upload.`;
+    }
+
+    // Switch active navigation tab
+    function switchTab(pageNum) {
+      activePageIndex = pageNum;
+      
+      // Update Title
+      document.getElementById('active-title').innerText = pageTitles[pageNum];
+
+      // Hide Page 1 and Dynamic Container
+      const page1 = document.getElementById('page-1');
+      const dynamicContainer = document.getElementById('dynamic-container');
+
+      if (pageNum === 1) {
+        page1.classList.remove('hidden');
+        dynamicContainer.classList.add('hidden');
+      } else {
+        page1.classList.add('hidden');
+        dynamicContainer.classList.remove('hidden');
+        document.getElementById('dynamic-text-body').innerText = getStoredData(pageNum);
+      }
+
+      // Update button styles
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('bg-emerald-50', 'text-emerald-900', 'font-semibold', 'border-l-4', 'border-emerald-600', 'border-y', 'border-r', 'border-emerald-200/60', 'shadow-sm');
+        btn.classList.add('text-slate-700', 'font-medium');
+
+        const chevron = btn.querySelector('[data-lucide="chevron-right"]');
+        if (chevron) chevron.classList.add('opacity-0');
+      });
+
+      const activeBtn = document.getElementById('btn-page-' + pageNum);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-emerald-50', 'text-emerald-900', 'font-semibold', 'border-l-4', 'border-emerald-600', 'border-y', 'border-r', 'border-emerald-200/60', 'shadow-sm');
+        activeBtn.classList.remove('text-slate-700', 'font-medium');
+
+        const activeChevron = activeBtn.querySelector('[data-lucide="chevron-right"]');
+        if (activeChevron) activeChevron.classList.remove('opacity-0');
+      }
+    }
+
+    // Edit Modal Logic for H.O.D.
+    function openEditModal() {
+      document.getElementById('modal-title-input').value = pageTitles[activePageIndex];
+      document.getElementById('modal-body-input').value = activePageIndex === 1 ? document.getElementById('content-vision').innerText : getStoredData(activePageIndex);
+      document.getElementById('edit-modal').classList.remove('hidden');
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-modal').classList.add('hidden');
+    }
+
+    function saveSectionData() {
+      const newTitle = document.getElementById('modal-title-input').value;
+      const newBody = document.getElementById('modal-body-input').value;
+
+      if (newTitle) {
+        pageTitles[activePageIndex] = newTitle;
+        document.getElementById('active-title').innerText = newTitle;
+      }
+
+      if (activePageIndex === 1) {
+        document.getElementById('content-vision').innerText = newBody;
+      } else {
+        localStorage.setItem('sivet_ai_section_' + activePageIndex, newBody);
+        document.getElementById('dynamic-text-body').innerText = newBody;
+      }
+
+      closeEditModal();
+    }
+
+    // Filter Menu Search
+    function filterMenu() {
+      const input = document.getElementById('menu-search').value.toLowerCase();
+      const buttons = document.querySelectorAll('#sidebar-menu button');
+      const banners = document.querySelectorAll('.section-banner');
+
+      buttons.forEach(btn => {
+        const text = btn.innerText.toLowerCase();
+        btn.style.display = text.includes(input) ? 'flex' : 'none';
+      });
+
+      banners.forEach(banner => {
+        banner.style.display = input ? 'none' : 'flex';
+      });
+    }
+  </script>
+
+</body>
+</html>
