@@ -265,7 +265,7 @@
     <main class="flex-1 overflow-y-auto p-6 lg:p-10 bg-white">
       <div class="max-w-5xl mx-auto">
 
-        <!-- CONTENT HEADER WITH EDIT CONTROL FOR HOD -->
+        <!-- CONTENT HEADER -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-emerald-100 pb-4 mb-6 gap-3">
           <div>
             <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest flex items-center gap-1.5">
@@ -275,15 +275,9 @@
               Welcome to AI Department
             </h2>
           </div>
-
-          <!-- Edit Button for H.O.D. Database Entry -->
-          <button onclick="openEditModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-md shadow-sm transition transform hover:scale-105 shrink-0">
-            <i data-lucide="edit-3" class="w-4 h-4"></i>
-            Edit Section Content (HOD Admin)
-          </button>
         </div>
 
-        <!-- PAGE 0: NEW HERO HOME PAGE WITH BACKGROUND IMAGE -->
+        <!-- PAGE 0: HERO HOME PAGE WITH BACKGROUND IMAGE -->
         <div id="page-0" class="page-content fade-in-slide space-y-6">
           <div class="relative rounded-2xl overflow-hidden shadow-xl border border-emerald-200/60 min-h-[380px] flex items-center">
             <!-- Background Image with Overlay -->
@@ -382,7 +376,7 @@
           <div class="border border-slate-200 rounded-xl p-6 space-y-4 bg-white">
             <div class="flex items-center justify-between">
               <span class="text-xs font-semibold text-slate-400">Database Entry Status</span>
-              <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-medium">Ready for updates</span>
+              <span class="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 font-medium">Verified Content</span>
             </div>
             <div class="space-y-2.5">
               <div class="h-4 skeleton-wave rounded w-3/4"></div>
@@ -395,32 +389,6 @@
       </div>
     </main>
 
-  </div>
-
-  <!-- EDIT MODAL FOR H.O.D. TO UPDATE SECTION DATA -->
-  <div id="edit-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
-      <div class="bg-emerald-800 px-6 py-4 text-white flex items-center justify-between">
-        <h3 class="font-serif-academic font-bold text-lg">Update Section Data</h3>
-        <button onclick="closeEditModal()" class="text-emerald-200 hover:text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Section Title</label>
-          <input type="text" id="modal-title-input" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Content / Description Details</label>
-          <textarea id="modal-body-input" rows="5" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Enter updated information for this department section..."></textarea>
-        </div>
-      </div>
-      <div class="bg-slate-50 px-6 py-3 flex justify-end gap-3 border-t border-slate-200">
-        <button onclick="closeEditModal()" class="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-200 rounded-md">Cancel</button>
-        <button onclick="saveSectionData()" class="px-4 py-2 text-xs font-semibold bg-emerald-700 hover:bg-emerald-800 text-white rounded-md shadow-sm">Save Update</button>
-      </div>
-    </div>
   </div>
 
   <!-- JAVASCRIPT -->
@@ -448,11 +416,9 @@
 
     let activePageIndex = 0;
 
-    // Load or initialize local data store
+    // Load static or stored section content
     function getStoredData(index) {
-      const stored = localStorage.getItem('sivet_ai_section_' + index);
-      if (stored) return stored;
-      return `Detailed data for ${pageTitles[index]} is prepared and ready for H.O.D. database upload.`;
+      return `Information and details regarding ${pageTitles[index]}.`;
     }
 
     // Switch active navigation tab
@@ -494,36 +460,6 @@
         const activeChevron = activeBtn.querySelector('[data-lucide="chevron-right"]');
         if (activeChevron) activeChevron.classList.remove('opacity-0');
       }
-    }
-
-    // Edit Modal Logic for H.O.D.
-    function openEditModal() {
-      document.getElementById('modal-title-input').value = pageTitles[activePageIndex];
-      document.getElementById('modal-body-input').value = activePageIndex === 1 ? document.getElementById('content-vision').innerText : getStoredData(activePageIndex);
-      document.getElementById('edit-modal').classList.remove('hidden');
-    }
-
-    function closeEditModal() {
-      document.getElementById('edit-modal').classList.add('hidden');
-    }
-
-    function saveSectionData() {
-      const newTitle = document.getElementById('modal-title-input').value;
-      const newBody = document.getElementById('modal-body-input').value;
-
-      if (newTitle) {
-        pageTitles[activePageIndex] = newTitle;
-        document.getElementById('active-title').innerText = newTitle;
-      }
-
-      if (activePageIndex === 1) {
-        document.getElementById('content-vision').innerText = newBody;
-      } else {
-        localStorage.setItem('sivet_ai_section_' + activePageIndex, newBody);
-        document.getElementById('dynamic-text-body').innerText = newBody;
-      }
-
-      closeEditModal();
     }
 
     // Filter Menu Search
