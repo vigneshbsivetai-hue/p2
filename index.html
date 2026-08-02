@@ -104,7 +104,7 @@
   </header>
 
   <!-- MARQUEE NEWS TICKER -->
-  <div class="bg-emerald-100/80 border-b border-emerald-200 text-emerald-950 text-xs py-1.5 overflow-hidden flex items-center shrink-0">
+  <div class="bg-emerald-100/80 border-b border-emerald-200 text-emerald-950 text-xs py-1.5 overflow-hidden flex items-center shrink-0 z-20">
     <div class="bg-emerald-700 text-white font-bold px-3 py-0.5 text-[10px] uppercase tracking-wider shrink-0 z-10 ml-2 rounded">
       Updates
     </div>
@@ -115,11 +115,13 @@
     </div>
   </div>
 
-  <!-- MAIN LAYOUT -->
-  <div class="flex-1 flex overflow-hidden">
+  <!-- MAIN LAYOUT WITH FULL BACKGROUND IMAGE COVERAGE -->
+  <div class="flex-1 flex overflow-hidden relative bg-cover bg-center bg-no-style" style="background-image: url('it block.png');">
+    <!-- OVERLAY FOR BETTER CONTRAST AND READABILITY -->
+    <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-[2px] z-0"></div>
 
     <!-- LEFT SIDEBAR NAVIGATION -->
-    <aside class="w-80 lg:w-88 bg-white border-r border-emerald-100 flex flex-col shrink-0 z-10 shadow-sm">
+    <aside class="w-80 lg:w-88 bg-white/95 backdrop-blur-md border-r border-emerald-100 flex flex-col shrink-0 z-10 shadow-lg">
 
       <!-- Navigation Search -->
       <div class="p-3 border-b border-emerald-100 bg-emerald-50/40">
@@ -265,32 +267,24 @@
     </aside>
 
     <!-- RIGHT MAIN CONTENT DISPLAY AREA -->
-    <main class="flex-1 overflow-y-auto p-6 lg:p-10 bg-white">
-      <div class="max-w-5xl mx-auto">
+    <main class="flex-1 overflow-y-auto p-6 lg:p-10 relative z-10">
+      <div class="max-w-5xl mx-auto bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-white/40">
 
-        <!-- CONTENT HEADER WITH EDIT CONTROL FOR HOD -->
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-emerald-100 pb-4 mb-6 gap-3">
-          <div>
-            <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest flex items-center gap-1.5">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Active View Mode
-            </span>
-            <h2 id="active-title" class="text-2xl lg:text-3xl font-serif-academic font-bold text-slate-900 mt-1">
-              Welcome to AI Department
-            </h2>
-          </div>
-
-          <!-- Edit Button for H.O.D. Database Entry -->
-          <button onclick="openEditModal()" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold rounded-md shadow-sm transition transform hover:scale-105 shrink-0">
-            <i data-lucide="edit-3" class="w-4 h-4"></i>
-            Edit Section Content (HOD Admin)
-          </button>
+        <!-- CONTENT HEADER -->
+        <div class="border-b border-emerald-200/80 pb-4 mb-6">
+          <span class="text-xs font-semibold text-emerald-700 uppercase tracking-widest flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Active View Mode
+          </span>
+          <h2 id="active-title" class="text-2xl lg:text-3xl font-serif-academic font-bold text-slate-900 mt-1">
+            Welcome to AI Department
+          </h2>
         </div>
 
-        <!-- PAGE 0: HERO HOME PAGE WITH FULL BACKGROUND COVERAGE -->
+        <!-- PAGE 0: HERO HOME PAGE -->
         <div id="page-0" class="page-content fade-in-slide space-y-6">
           <div class="relative rounded-2xl overflow-hidden shadow-xl border border-emerald-200/60 min-h-[450px] w-full flex items-center">
             
-            <!-- FULL AREA BACKGROUND IMAGE -->
+            <!-- HERO BACKGROUND IMAGE -->
             <img src="it block.png" alt="S.I.V.E.T. College Campus" class="absolute inset-0 w-full h-full object-cover object-center z-0">
             
             <!-- GRADIENT OVERLAY FOR READABILITY -->
@@ -316,33 +310,6 @@
                   Lab Specifications
                 </button>
               </div>
-            </div>
-          </div>
-
-          <!-- Quick Navigation Cards Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-            <div onclick="switchTab(1)" class="cursor-pointer bg-emerald-50/50 hover:bg-emerald-100/60 border border-emerald-200/80 p-5 rounded-xl transition shadow-sm hover:shadow-md">
-              <div class="p-3 bg-emerald-700 text-white rounded-lg w-fit mb-3">
-                <i data-lucide="compass" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-serif-academic font-bold text-slate-900 text-base">Vision & Mission</h3>
-              <p class="text-xs text-slate-600 mt-1">Discover our core educational objectives and ethical grounding in AI.</p>
-            </div>
-
-            <div onclick="switchTab(5)" class="cursor-pointer bg-emerald-50/50 hover:bg-emerald-100/60 border border-emerald-200/80 p-5 rounded-xl transition shadow-sm hover:shadow-md">
-              <div class="p-3 bg-teal-700 text-white rounded-lg w-fit mb-3">
-                <i data-lucide="cpu" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-serif-academic font-bold text-slate-900 text-base">AI Laboratories</h3>
-              <p class="text-xs text-slate-600 mt-1">State-of-the-art computational systems for Machine Learning research.</p>
-            </div>
-
-            <div onclick="switchTab(8)" class="cursor-pointer bg-emerald-50/50 hover:bg-emerald-100/60 border border-emerald-200/80 p-5 rounded-xl transition shadow-sm hover:shadow-md">
-              <div class="p-3 bg-emerald-800 text-white rounded-lg w-fit mb-3">
-                <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-              </div>
-              <h3 class="font-serif-academic font-bold text-slate-900 text-base">Faculty Members</h3>
-              <p class="text-xs text-slate-600 mt-1">Meet our team of experienced professors, researchers, and mentors.</p>
             </div>
           </div>
         </div>
@@ -403,32 +370,6 @@
 
   </div>
 
-  <!-- EDIT MODAL FOR H.O.D. TO UPDATE SECTION DATA -->
-  <div id="edit-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden transform transition-all">
-      <div class="bg-emerald-800 px-6 py-4 text-white flex items-center justify-between">
-        <h3 class="font-serif-academic font-bold text-lg">Update Section Data</h3>
-        <button onclick="closeEditModal()" class="text-emerald-200 hover:text-white">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-      <div class="p-6 space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Section Title</label>
-          <input type="text" id="modal-title-input" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Content / Description Details</label>
-          <textarea id="modal-body-input" rows="5" class="w-full px-3 py-2 border border-slate-300 rounded-md text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Enter updated information for this department section..."></textarea>
-        </div>
-      </div>
-      <div class="bg-slate-50 px-6 py-3 flex justify-end gap-3 border-t border-slate-200">
-        <button onclick="closeEditModal()" class="px-4 py-2 text-xs font-medium text-slate-600 hover:bg-slate-200 rounded-md">Cancel</button>
-        <button onclick="saveSectionData()" class="px-4 py-2 text-xs font-semibold bg-emerald-700 hover:bg-emerald-800 text-white rounded-md shadow-sm">Save Update</button>
-      </div>
-    </div>
-  </div>
-
   <!-- JAVASCRIPT -->
   <script>
     // Initialize Lucide Icons
@@ -454,11 +395,9 @@
 
     let activePageIndex = 0;
 
-    // Load or initialize local data store
+    // Load dynamic text
     function getStoredData(index) {
-      const stored = localStorage.getItem('sivet_ai_section_' + index);
-      if (stored) return stored;
-      return `Detailed data for ${pageTitles[index]} is prepared and ready for H.O.D. database upload.`;
+      return `Detailed data for ${pageTitles[index]} is being loaded for display.`;
     }
 
     // Switch active navigation tab
@@ -500,36 +439,6 @@
         const activeChevron = activeBtn.querySelector('[data-lucide="chevron-right"]');
         if (activeChevron) activeChevron.classList.remove('opacity-0');
       }
-    }
-
-    // Edit Modal Logic for H.O.D.
-    function openEditModal() {
-      document.getElementById('modal-title-input').value = pageTitles[activePageIndex];
-      document.getElementById('modal-body-input').value = activePageIndex === 1 ? document.getElementById('content-vision').innerText : getStoredData(activePageIndex);
-      document.getElementById('edit-modal').classList.remove('hidden');
-    }
-
-    function closeEditModal() {
-      document.getElementById('edit-modal').classList.add('hidden');
-    }
-
-    function saveSectionData() {
-      const newTitle = document.getElementById('modal-title-input').value;
-      const newBody = document.getElementById('modal-body-input').value;
-
-      if (newTitle) {
-        pageTitles[activePageIndex] = newTitle;
-        document.getElementById('active-title').innerText = newTitle;
-      }
-
-      if (activePageIndex === 1) {
-        document.getElementById('content-vision').innerText = newBody;
-      } else {
-        localStorage.setItem('sivet_ai_section_' + activePageIndex, newBody);
-        document.getElementById('dynamic-text-body').innerText = newBody;
-      }
-
-      closeEditModal();
     }
 
     // Filter Menu Search
